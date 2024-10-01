@@ -27,13 +27,13 @@ import androidx.navigation.compose.rememberNavController
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.R
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonP
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonV
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarNavIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.ui.theme.ParcialP2_parte2Theme
 
 @Composable
 fun FilesPage(
     navController: NavHostController
 ){
-
     Scaffold(
         topBar = { FilesTopAppBar() },
         bottomBar = { FilesBottomAppBar() }
@@ -46,6 +46,7 @@ fun FilesPage(
                     bottom = innerPadding.calculateBottomPadding()
                 )
                 .fillMaxSize()
+                .background(color = colorResource(R.color.background))
         ) {
 
         }
@@ -81,7 +82,7 @@ fun FilesTopAppBar(){
             )
         },
         navigationIcon = {
-            AppBarIconButtonV(
+            AppBarNavIconButtonV(
                 iconModifier = Modifier.fillMaxSize(0.75f),
                 onClick = {},
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -108,21 +109,24 @@ fun FilesBottomAppBar(){
                     iconModifier = Modifier.fillMaxSize(),
                     onClick = {},
                     imageVector = Icons.Filled.LocationOn,
-                    contentDescription = "Location"
+                    contentDescription = "Location",
+                    text = "Ubicacion"
                 )
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
                     onClick = {},
                     painter = painterResource(R.drawable.baseline_upload_file_24),
-                    contentDescription = "Upload"
+                    contentDescription = "Upload",
+                    text = "Subir"
                 )
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
                     onClick = {},
                     painter = painterResource(R.drawable.baseline_notifications_none_24),
-                    contentDescription = "Notifications"
+                    contentDescription = "Notifications",
+                    text = "Notificacion"
                 )
             }
         }
