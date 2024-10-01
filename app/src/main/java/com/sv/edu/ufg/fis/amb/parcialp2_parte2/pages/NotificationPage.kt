@@ -1,5 +1,7 @@
 package com.sv.edu.ufg.fis.amb.parcialp2_parte2.pages
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,15 +31,20 @@ import com.sv.edu.ufg.fis.amb.parcialp2_parte2.R
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonP
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarNavIconButtonV
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_FILES_PAGE
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_LOCATION_PAGE
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_NOTIFY_PAGE
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.ui.theme.ParcialP2_parte2Theme
 
 @Composable
 fun NotifyPage(
     navController: NavHostController
 ){
+    val context = LocalContext.current
+
     Scaffold(
         topBar = { NotifyTopAppBar() },
-        bottomBar = { NotifyBottomAppBar() }
+        bottomBar = { NotifyBottomAppBar(context = context, navController = navController) }
     ) {
         innerPadding ->
         Column(
@@ -94,7 +102,10 @@ fun NotifyTopAppBar(){
 //---------------------------------------------------------------- [BOTTOM APP BAR]
 
 @Composable
-fun NotifyBottomAppBar(){
+fun NotifyBottomAppBar(
+    context: Context,
+    navController: NavHostController
+){
     BottomAppBar(
         modifier = Modifier
             .background(colorResource(R.color.bottomBarBackground)),
@@ -106,7 +117,7 @@ fun NotifyBottomAppBar(){
             ) {
                 AppBarIconButtonV(
                     iconModifier = Modifier.fillMaxSize(),
-                    onClick = {},
+                    onClick = { navController.navigate(ROOT_LOCATION_PAGE) },
                     imageVector = Icons.Filled.LocationOn,
                     contentDescription = "Location",
                     text = "Ubicacion"
@@ -114,7 +125,7 @@ fun NotifyBottomAppBar(){
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
-                    onClick = {},
+                    onClick = { navController.navigate(ROOT_FILES_PAGE) },
                     painter = painterResource(R.drawable.baseline_upload_file_24),
                     contentDescription = "Upload",
                     text = "Subir"
@@ -122,7 +133,11 @@ fun NotifyBottomAppBar(){
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
-                    onClick = {},
+                    onClick = {
+                        Toast
+                            .makeText(context, "Opcion ya seleccionada", Toast.LENGTH_LONG)
+                            .show()
+                    },
                     painter = painterResource(R.drawable.baseline_notifications_none_24),
                     contentDescription = "Notifications",
                     text = "Notificacion"

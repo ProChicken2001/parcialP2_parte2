@@ -39,6 +39,9 @@ import com.sv.edu.ufg.fis.amb.parcialp2_parte2.R
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonP
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarNavIconButtonV
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_FILES_PAGE
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_LOCATION_PAGE
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_NOTIFY_PAGE
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.ui.theme.ParcialP2_parte2Theme
 
 @Composable
@@ -47,7 +50,7 @@ fun MainPage(
 ){
     Scaffold(
         topBar = { MainTopAppBar() },
-        bottomBar = { MainBottomAppBar() }
+        bottomBar = { MainBottomAppBar(navController) }
     ) {
         innerPadding ->
         Column(
@@ -106,7 +109,9 @@ fun MainTopAppBar(){
 //---------------------------------------------------------------- [BOTTOM APP BAR]
 
 @Composable
-fun MainBottomAppBar(){
+fun MainBottomAppBar(
+    navController: NavHostController
+){
     BottomAppBar(
         modifier = Modifier
             .background(colorResource(R.color.bottomBarBackground)),
@@ -118,7 +123,7 @@ fun MainBottomAppBar(){
             ) {
                 AppBarIconButtonV(
                     iconModifier = Modifier.fillMaxSize(),
-                    onClick = {},
+                    onClick = { navController.navigate(ROOT_LOCATION_PAGE) },
                     imageVector = Icons.Filled.LocationOn,
                     contentDescription = "Location",
                     text = "Ubicacion"
@@ -126,7 +131,7 @@ fun MainBottomAppBar(){
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
-                    onClick = {},
+                    onClick = {navController.navigate(ROOT_FILES_PAGE) },
                     painter = painterResource(R.drawable.baseline_upload_file_24),
                     contentDescription = "Upload",
                     text = "Subir"
@@ -134,7 +139,7 @@ fun MainBottomAppBar(){
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
-                    onClick = {},
+                    onClick = { navController.navigate(ROOT_NOTIFY_PAGE) },
                     painter = painterResource(R.drawable.baseline_notifications_none_24),
                     contentDescription = "Notifications",
                     text = "Notificacion"
