@@ -1,32 +1,44 @@
 package com.sv.edu.ufg.fis.amb.parcialp2_parte2.pages
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.R
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonP
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonV
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarNavIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.ui.theme.ParcialP2_parte2Theme
 
 @Composable
@@ -40,11 +52,15 @@ fun MainPage(
         innerPadding ->
         Column(
             modifier = Modifier
-                .padding(vertical = innerPadding.calculateTopPadding())
+                .padding(
+                    top = innerPadding.calculateTopPadding(),
+                    bottom = innerPadding.calculateBottomPadding(),
+                )
                 .fillMaxSize()
-                .background(color = colorResource(R.color.background))
+                .background(color = colorResource(R.color.background)),
+            verticalArrangement = Arrangement.Center
         ) {
-
+            BodyMain()
         }
     }
 }
@@ -77,7 +93,7 @@ fun MainTopAppBar(){
             )
         },
         navigationIcon = {
-            AppBarIconButtonV(
+            AppBarNavIconButtonV(
                 iconModifier = Modifier.fillMaxSize(0.75f),
                 onClick = {},
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -104,23 +120,54 @@ fun MainBottomAppBar(){
                     iconModifier = Modifier.fillMaxSize(),
                     onClick = {},
                     imageVector = Icons.Filled.LocationOn,
-                    contentDescription = "Location"
+                    contentDescription = "Location",
+                    text = "Ubicacion"
                 )
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
                     onClick = {},
                     painter = painterResource(R.drawable.baseline_upload_file_24),
-                    contentDescription = "Upload"
+                    contentDescription = "Upload",
+                    text = "Subir"
                 )
                 AppBarIconButtonP(
                     iconModifier = Modifier
                         .fillMaxSize(),
                     onClick = {},
                     painter = painterResource(R.drawable.baseline_notifications_none_24),
-                    contentDescription = "Notifications"
+                    contentDescription = "Notifications",
+                    text = "Notificacion"
                 )
             }
         }
     )
+}
+
+@Composable
+fun BodyMain(){
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(350.dp)
+            .padding(start = 15.dp, end = 15.dp),
+        colors = CardDefaults
+            .cardColors(containerColor = colorResource(R.color.background))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth(0.75f)
+                    .fillMaxHeight(0.75f),
+                painter = painterResource(R.drawable.home),
+                contentDescription = "Image",
+                contentScale = ContentScale.Crop
+            )
+        }
+    }
 }
