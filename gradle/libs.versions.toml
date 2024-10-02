@@ -12,6 +12,7 @@ nav = "2.7.7"
 googleMaps = "19.0.0"
 mapsCompose = "4.4.1"
 googleLocation = "21.3.0"
+coil = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ androidx-navigation-compose = { group = "androidx.navigation", name="navigation-
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "googleLocation" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "googleMaps" }
 google-maps-android = { group = "com.google.maps.android", name = "maps-compose", version.ref = "mapsCompose"}
+coil = { group = "io.coil-kt", name= "coil-compose", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
