@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -211,17 +212,11 @@ fun BodyFiles(
         grantend = permisos[Manifest.permission.READ_MEDIA_IMAGES] == true ||
                 permisos[Manifest.permission.READ_MEDIA_VIDEO] == true
 
-        if(grantend){
-            val intent = Intent(Intent.ACTION_PICK).apply {
-                type = "*/*"
-                putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
-            }
-            launcherIntent.launch(intent)
-        }else{
-            Toast
-                .makeText(context, "Permisos denegados por el usuario", Toast.LENGTH_LONG)
-                .show()
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
         }
+        launcherIntent.launch(intent)
     }
 
 
@@ -234,83 +229,85 @@ fun BodyFiles(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
-            if(grantend){
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth(0.70f),
-                    onClick = {
-                        mediaLauncher.launch(
-                            arrayOf(
-                                Manifest.permission.READ_MEDIA_IMAGES,
-                                Manifest.permission.READ_MEDIA_VIDEO
-                            )
+
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth(0.70f),
+                onClick = {
+                    mediaLauncher.launch(
+                        arrayOf(
+                            Manifest.permission.READ_MEDIA_IMAGES,
+                            Manifest.permission.READ_MEDIA_VIDEO
                         )
-                    }
-                ) {
-                    Text(
-                        "Seleccionar imagen o video",
-                        fontSize = 13.5.sp,
-                        textAlign = TextAlign.Center
                     )
                 }
-                Spacer(modifier = Modifier.height(15.dp))
-                mediaUri?.let {
-
-                    val contentResolver = context.contentResolver
-                    val type = contentResolver.getType(it)
-
-                    if(type?.startsWith("image/") == true){
-                        Image(
-                            modifier = Modifier
-                                .height(262.5.dp)
-                                .width(262.5.dp),
-                            painter = rememberAsyncImagePainter(it),
-                            contentDescription = "Image Selected"
-                        )
-                    }else if(type?.startsWith("video/") == true){
-                        Text(text = "Video seleccionado: ${it.lastPathSegment}")
-                    }
-
-                }
-
-            }else{
-                Image(
-                    modifier = Modifier
-                        .height(262.5.dp)
-                        .width(262.5.dp)
-                        .clip(RoundedCornerShape(25.dp)),
-                    painter = painterResource(R.drawable.upload),
-                    contentDescription = "Image",
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.height(15.dp))
+            ) {
                 Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 15.dp, end = 15.dp),
-                    text = "No se tienen permisos para acceder a los archivos multimedia",
-                    textAlign = TextAlign.Center,
+                    "Seleccionar imagen o video",
+                    fontSize = 13.5.sp,
+                    textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(7.5.dp))
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth(0.70f),
-                    onClick = {
-                        mediaLauncher.launch(
-                            arrayOf(
-                                Manifest.permission.READ_MEDIA_IMAGES,
-                                Manifest.permission.READ_MEDIA_VIDEO
-                            )
-                        )
-                    }
-                ) {
-                    Text(
-                        "Acceder a los archivos multimedia",
-                        fontSize = 13.5.sp,
-                        textAlign = TextAlign.Center
-                    )
-                }
             }
+            Spacer(modifier = Modifier.height(15.dp))
+            mediaUri?.let {
+
+                val contentResolver = context.contentResolver
+                val type = contentResolver.getType(it)
+
+                if(type?.startsWith("image/") == true){
+                    Image(
+                        modifier = Modifier
+                            .height(262.5.dp)
+                            .width(262.5.dp),
+                        painter = rememberAsyncImagePainter(it),
+                        contentDescription = "Image Selected"
+                    )
+                }else if(type?.startsWith("video/") == true){
+                    Text(text = "Video seleccionado: ${it.lastPathSegment}")
+                }
+
+            }
+
+//            if(grantend || mediaUri != null){
+//
+//            }else{
+//                Image(
+//                    modifier = Modifier
+//                        .height(262.5.dp)
+//                        .width(262.5.dp)
+//                        .clip(RoundedCornerShape(25.dp)),
+//                    painter = painterResource(R.drawable.upload),
+//                    contentDescription = "Image",
+//                    contentScale = ContentScale.Crop
+//                )
+//                Spacer(modifier = Modifier.height(15.dp))
+//                Text(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(start = 15.dp, end = 15.dp),
+//                    text = "No se tienen permisos para acceder a los archivos multimedia",
+//                    textAlign = TextAlign.Center,
+//                )
+//                Spacer(modifier = Modifier.height(7.5.dp))
+//                Button(
+//                    modifier = Modifier
+//                        .fillMaxWidth(0.70f),
+//                    onClick = {
+//                        mediaLauncher.launch(
+//                            arrayOf(
+//                                Manifest.permission.READ_MEDIA_IMAGES,
+//                                Manifest.permission.READ_MEDIA_VIDEO
+//                            )
+//                        )
+//                    }
+//                ) {
+//                    Text(
+//                        "Acceder a los archivos multimedia",
+//                        fontSize = 13.5.sp,
+//                        textAlign = TextAlign.Center
+//                    )
+//                }
+//            }
         }
     }
 }
