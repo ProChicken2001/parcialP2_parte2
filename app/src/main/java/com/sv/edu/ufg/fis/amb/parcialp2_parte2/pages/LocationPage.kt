@@ -260,7 +260,7 @@ fun MapLocation(
 ){
     val ubicacionClient = LocationServices.getFusedLocationProviderClient(context)
 
-    var defaultLat = LatLng(13.794185, -88.89653)
+    var defaultLat by remember { mutableStateOf(LatLng(13.794185, -88.89653)) }
 
     val posicionCamara = rememberCameraPositionState{
         position = CameraPosition.fromLatLngZoom(defaultLat, 12f)
