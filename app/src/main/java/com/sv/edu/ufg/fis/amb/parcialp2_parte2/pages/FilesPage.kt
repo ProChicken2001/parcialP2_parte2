@@ -32,6 +32,7 @@ import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButto
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarNavIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_LOCATION_PAGE
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_MAIN_PAGE
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_NOTIFY_PAGE
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.ui.theme.ParcialP2_parte2Theme
 
@@ -42,7 +43,7 @@ fun FilesPage(
     var context = LocalContext.current
 
     Scaffold(
-        topBar = { FilesTopAppBar() },
+        topBar = { FilesTopAppBar(navController) },
         bottomBar = { FilesBottomAppBar(context = context, navController = navController) }
     ) {
         innerPadding ->
@@ -79,7 +80,9 @@ fun FilesPagePreview(){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilesTopAppBar(){
+fun FilesTopAppBar(
+    navController: NavHostController
+){
     TopAppBar(
         title = {
             Text(
@@ -91,7 +94,7 @@ fun FilesTopAppBar(){
         navigationIcon = {
             AppBarNavIconButtonV(
                 iconModifier = Modifier.fillMaxSize(0.75f),
-                onClick = {},
+                onClick = { navController.navigate(ROOT_MAIN_PAGE) },
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Exit to App"
             )

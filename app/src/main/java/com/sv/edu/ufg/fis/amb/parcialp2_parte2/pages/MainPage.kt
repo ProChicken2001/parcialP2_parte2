@@ -1,16 +1,20 @@
 package com.sv.edu.ufg.fis.amb.parcialp2_parte2.pages
 
+import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
@@ -25,11 +29,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,8 +55,10 @@ import com.sv.edu.ufg.fis.amb.parcialp2_parte2.ui.theme.ParcialP2_parte2Theme
 fun MainPage(
     navController : NavHostController
 ){
+    val context = LocalContext.current
+
     Scaffold(
-        topBar = { MainTopAppBar() },
+        topBar = { MainTopAppBar(context) },
         bottomBar = { MainBottomAppBar(navController) }
     ) {
         innerPadding ->
@@ -86,7 +95,9 @@ fun MainPagePreview(){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainTopAppBar(){
+fun MainTopAppBar(
+    context: Context
+){
     TopAppBar(
         title = {
             Text(
@@ -98,7 +109,9 @@ fun MainTopAppBar(){
         navigationIcon = {
             AppBarNavIconButtonV(
                 iconModifier = Modifier.fillMaxSize(0.75f),
-                onClick = {},
+                onClick = {
+                    (context as? Activity)?.finishAffinity()
+                },
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Exit to App"
             )
@@ -149,6 +162,8 @@ fun MainBottomAppBar(
     )
 }
 
+//---------------------------------------------------------------- [BODY MAIN]
+
 @Composable
 fun BodyMain(){
     Card(
@@ -157,7 +172,7 @@ fun BodyMain(){
             .height(350.dp)
             .padding(start = 15.dp, end = 15.dp),
         colors = CardDefaults
-            .cardColors(containerColor = colorResource(R.color.background))
+            .cardColors(containerColor = colorResource(R.color.background)),
     ) {
         Column(
             modifier = Modifier
@@ -168,10 +183,18 @@ fun BodyMain(){
             Image(
                 modifier = Modifier
                     .fillMaxWidth(0.75f)
-                    .fillMaxHeight(0.75f),
+                    .fillMaxHeight(0.75f)
+                    .clip(RoundedCornerShape(25.dp)),
                 painter = painterResource(R.drawable.home),
                 contentDescription = "Image",
                 contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = "Sin una opcion seleccionada, por favor seleccionar una opcion",
+                textAlign = TextAlign.Center,
             )
         }
     }

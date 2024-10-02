@@ -32,6 +32,7 @@ import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButto
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.custom.components.AppBarNavIconButtonV
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_FILES_PAGE
+import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_MAIN_PAGE
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.routes.ROOT_NOTIFY_PAGE
 import com.sv.edu.ufg.fis.amb.parcialp2_parte2.ui.theme.ParcialP2_parte2Theme
 
@@ -42,7 +43,7 @@ fun LocationPage(
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { LocationTopAppBar() },
+        topBar = { LocationTopAppBar(navController) },
         bottomBar = { LocationBottomAppBar(context = context, navController = navController) }
     ){
         innerPadding ->
@@ -78,7 +79,9 @@ fun LocationPagePreview(){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LocationTopAppBar(){
+fun LocationTopAppBar(
+    navController: NavHostController
+){
     TopAppBar(
         title = {
             Text(
@@ -90,7 +93,7 @@ fun LocationTopAppBar(){
         navigationIcon = {
             AppBarNavIconButtonV(
                 iconModifier = Modifier.fillMaxSize(0.75f),
-                onClick = {},
+                onClick = { navController.navigate(ROOT_MAIN_PAGE) },
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Exit to App"
             )
